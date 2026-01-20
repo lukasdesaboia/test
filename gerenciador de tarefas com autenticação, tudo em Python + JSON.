@@ -1,0 +1,56 @@
+import json
+import os
+
+ARQUIVO = 'dados.json'
+
+def carregar_dados():
+    if os.path.exists(ARQUIVO):
+        with open(ARQUIVO, 'r') as f:
+            return json.load(f)
+    return {"usuarios": {}, "tarefas": {}}
+
+def salvar_dados(dados):
+    with open(ARQUIVO, 'w') as f:
+        json.dump(dados, f, indent=4)
+
+# -------- USUÁRIOS --------
+
+def registrar_usuario(username, senha):
+    dados = carregar_dados()
+    if username in dados['usuarios']:
+        return False, "Usuário já existe"
+    
+    dados['usuarios'][username] = senha
+    dados['tarefas'][username] = []
+    salvar_dados(dados)
+    return True, "Usuário registrado com sucesso"
+
+def autenticar(username, senha):
+    dados = carregar_dados()
+    if username in dados['usuarios'] and dados['usuarios'][username] == senha:
+        return True
+    return False
+
+# -------- TAREFAS --------
+
+def listar_tarefas(usuario):
+    dados = carregar_dados()
+    return dados['tarefas'].get(usuario, [])
+
+def adicionar_tarefa(usuario, descricao):
+    dados = carregar_dados()
+    dados['tarefas'][usuario].append({
+        "descricao": descricao,
+        "concluida": False
+    })
+    salvar_dados(dados)
+
+def concluir_tarefa(usuario, indice):
+    dados = carregar_dados()
+    dados['tarefas'][usuario][indice]['concluida'] = True
+    salvar_dados(dados)
+
+def remover_tarefa(usuario, indice):
+    dados = carregar_dados()
+    dados['tarefas'][usuario].pop(indice)
+    salvar_dados(dados)
