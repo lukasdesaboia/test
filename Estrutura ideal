@@ -1,0 +1,22 @@
+sistema-hospitalar/
+│
+├── src/
+│   └── hospital_db.py          # Código do sistema
+│
+├── database/
+│   ├── hospital_mysql.sql      # Script MySQL
+│   ├── modelo_MER.png          # Diagrama MER
+│   └── modelo_DER.png          # Diagrama DER
+│
+├── sql/
+│   ├── relatorio_consultas.sql
+│   ├── relatorio_pacientes.sql
+│   └── relatorio_medicos.sql
+│
+├── docs/
+│   ├── MER.md
+│   ├── DER.md
+│   └── descricao_tabelas.md
+│
+├── README.md
+└── .gitignore
